@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+    background-color: rgba(186, 28, 28, 0.724);
+    margin: 0;
+    color: #fff;
+    text-align: center;
+    height: 100px;
+    padding: 20px;
+    line-height: 100px;
+}
+
+.input-container{
+    display: flex;
+    justify-content: center;
+    margin: 50px 10px;
+}
+
+.input-container input {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.input-container button {
+    background-color: rgba(8, 141, 8, 0.799);
+    color: white;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+#to-do-list {
+    background-color: rgba(250, 235, 215, 0.416);
+    padding: 20px;
+}
+
+#highPriorityContainer, #lowPriorityContainer {
+    border-radius: 5px;
+    height: 200px;
+    width: 90%;
+    padding: 10px;
+    border: 3px solid black;
+    margin: 10px auto;
+    background-color: #f9f9f9;
+}
