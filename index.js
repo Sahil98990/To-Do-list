@@ -1,26 +1,23 @@
-// Data Structures to store tasks
-var highPriorityTasks = [];
-var lowPriorityTasks = [];
-var today = new Date();
+let highPriorityTasks = [];
+let lowPriorityTasks = [];
+let today = new Date();
 
-// Adding new task
-document.getElementById("addButton").addEventListener("click", () => {
-    var taskInput = document.getElementById("taskInput");
-    var deadlineInput = document.getElementById("deadlineInput");
 
-    var newTask = {
+document.getElementById('addButton').addEventListener('click', function () {
+    let taskInput = document.getElementById('taskInput');
+    let deadlineInput = document.getElementById('deadlineInput');
+
+    let newTask = {
         description: taskInput.value,
         deadline: deadlineInput.value,
         done: false,
     };
 
-    var taskDeadline = new Date(deadlineInput.value);
-
-    if(taskDeadline.getTime() <= today.getTime()) {
+    let taskDeadline = new Date(deadlineInput.value);
+      
+    if (taskDeadline.getTime() <= today.getTime()) {
         highPriorityTasks.push(newTask);
-    }
-
-    else {
+    } else {
         lowPriorityTasks.push(newTask);
     }
 
@@ -30,3 +27,62 @@ document.getElementById("addButton").addEventListener("click", () => {
     deadlineInput.value = '';
 });
 
+
+function displayTasks() {
+  let highPriorityContainer = document.getElementById('highPriorityContainer');
+  let lowPriorityContainer = document.getElementById('lowPriorityContainer');
+  highPriorityContainer.innerHTML = '';
+  lowPriorityContainer.innerHTML = '';
+
+  let today = new Date();
+
+  highPriorityTasks.forEach(function (task, index) {
+    let taskItem = createTaskElement(task, index, 'high-priority');
+    highPriorityContainer.appendChild(taskItem);
+  });
+
+  lowPriorityTasks.forEach(function (task, index) {
+    let taskItem = createTaskElement(task, index, 'low-priority');
+    lowPriorityContainer.appendChild(taskItem);
+  });
+}
+
+function createTaskElement(task, index, priorityClass) {
+  let taskItem = document.createElement('div');
+  taskItem.className = 'todo-item';
+  taskItem.classList.add(priorityClass);
+
+  let checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = task.done;
+  
+  checkbox.addEventListener('change', function () {
+    task.done = this.checked;
+    displayTasks();
+  });
+
+  let label = document.createElement('label');
+  label.textContent = task.description + ' (Deadline: ' + task.deadline + ')';
+  if (task.done) {
+    label.style.textDecoration = 'line-through';
+  }
+  
+  let deleteButton = document.createElement('button');
+  deleteButton.className = 'delete-button';
+  deleteButton.textContent = 'Delete';
+  deleteButton.setAttribute('data-index', index);
+  deleteButton.addEventListener('click', function () {
+    if (priorityClass === 'high-priority') {
+      highPriorityTasks.splice(index, 1);
+    } else {
+      lowPriorityTasks.splice(index, 1);
+    }
+    displayTasks();
+  });
+
+  taskItem.appendChild(checkbox);
+  taskItem.appendChild(label);
+  taskItem.appendChild(deleteButton);
+
+  return taskItem;
+}
